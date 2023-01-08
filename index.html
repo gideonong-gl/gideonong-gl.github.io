@@ -45,8 +45,16 @@ async def process_response(url):
                 src = None
                 return src
 
-img = await process_response("https://cataas.com/cat")
-document.querySelector("img").setAttribute("src", img)
+
+
+async def image():  
+    while True:            
+        img = await process_response("https://cataas.com/cat")
+        document.querySelector("img").setAttribute("src", img)
+        await asyncio.sleep(1)
+
+asyncio.ensure_future(image())
+
     </py-script>
     </body>
 </html>
