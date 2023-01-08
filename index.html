@@ -1,65 +1,52 @@
-<html> 
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+        <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+    </head>
+    <body>
+        <h1>PyScript - images from API</h1>
+        <div>
+            <p>
+                This webpage fetches a cat image from <a href="https://cataas.com/#/", target="_blank">cataas</a> and displays it below.
+            </p>
+        </div>
+        <div><img id ="img" src="src"></div>
 
-
-
-  <head>
-    <title>Hello World1</title>
-    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
-    <script defer src="https://pyscript.net/latest/pyscript.js"></script> 
-  </head>
-
-
-  
-  <body> 
-    <h1>Hello World2</h1> 
-
-    
     <py-script>
+from pyodide.http import pyfetch
+import asyncio
+from js import document
+import base64
+from pathlib import Path
 
+async def download(url):
+            filename = Path(url).name
+            response = await pyfetch(url, method="GET")
+            if response.status == 200:
+                status = response.status
+                with open(filename, mode="wb") as file:
+                    file.write(await response.bytes())
+                return filename, status
+            else:
+                status = response.status
+                filename = None
+                return filename, status
 
-      import asyncio
+async def process_response(url):
+            response_content = await loop.run_until_complete(
+                download(url)
+                )
+            if response_content[1] == 200:
+                data = base64.b64encode(open(response_content[0], "rb").read()).decode("utf-8")
+                src = f"data:image/png;base64,{data}"
+                return src
+            else:
+                src = None
+                return src
 
-
-      count = 0
-      async def heart():
-        print("I am going to print 500 hearts")
-        for i in range(3):
-          await asyncio.sleep(0.5)
-          print('<3')
-
-        print("actually its 3 <3")
-          
-
-
-
-      async def greeting():
-        await asyncio.sleep(0.5)
-        print("I'm James")
-        await asyncio.sleep(0.5)
-        print("nice to meet you")
-        await asyncio.sleep(0.5)
-        asyncio.ensure_future(heart())
-
-
-
-      
-
-      print('Hello, World!')
-      
-      asyncio.ensure_future(greeting())
-      
-
-      
-
-
+img = await process_response("https://cataas.com/cat")
+document.querySelector("img").setAttribute("src", img)
     </py-script>
-
-
-
-  </body>
-
-
-
-
-
+    </body>
 </html>
