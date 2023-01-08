@@ -1,0 +1,63 @@
+<html> 
+
+
+
+  <head>
+    <title>Hello World1</title>
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script> 
+  </head>
+
+
+  
+  <body> 
+    <h1>Hello World2</h1> 
+
+    
+    <py-script>
+
+
+      import asyncio
+
+
+      count = 0
+      async def heart():
+        print("I am going to print 500 hearts")
+        for i in range(3):
+          await asyncio.sleep(0.5)
+          print('<3')
+          
+
+
+
+      async def greeting():
+        await asyncio.sleep(0.5)
+        print("I'm James")
+        await asyncio.sleep(0.5)
+        print("nice to meet you")
+        await asyncio.sleep(0.5)
+        asyncio.ensure_future(heart())
+
+
+
+      
+
+      print('Hello, World!')
+      
+      asyncio.ensure_future(greeting())
+      
+
+      
+
+
+    </py-script>
+
+
+
+  </body>
+
+
+
+
+
+</html>
