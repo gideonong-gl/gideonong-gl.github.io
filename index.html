@@ -52,7 +52,7 @@ async def image():
         img = await process_response("https://cataas.com/cat")
         document.querySelector("img").setAttribute("src", img)
         await asyncio.sleep(1)
-        print("yes")
+        print("cat")
 
 asyncio.ensure_future(image())
 
