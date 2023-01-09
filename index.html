@@ -45,6 +45,7 @@ async def process_response(url):
                 print()
                 print(open(response_content[0], "rb").read())
                 print()
+                print("meow")
                 src = f"data:image/png;base64,{data}"
                 return src
             else:
