@@ -41,6 +41,7 @@ async def process_response(url):
                 )
             if response_content[1] == 200:
                 data = base64.b64encode(open(response_content[0], "rb").read()).decode("utf-8")
+                print(data)
                 src = f"data:image/png;base64,{data}"
                 return src
             else:
@@ -54,7 +55,7 @@ async def process_response(url):
 async def image():  
     while True:            
         img = await process_response("https://cataas.com/cat")
-        print(img)
+
 
 
         document.querySelector("img").setAttribute("src", img)
