@@ -54,14 +54,14 @@ async def process_response(url):
 async def image():  
     while True:            
         img = await process_response("https://cataas.com/cat")
-        print(type(img))
+        print(img)
 
 
         document.querySelector("img").setAttribute("src", img)
 
 
         await asyncio.sleep(1)
-        print("meow", end=" ")
+        print("meown", end=" ")
 
 asyncio.ensure_future(image())
 
