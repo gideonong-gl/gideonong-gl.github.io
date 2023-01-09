@@ -33,6 +33,8 @@ async def download(url):
                 filename = None
                 return filename, status
 
+
+
 async def process_response(url):
             response_content = await loop.run_until_complete(
                 download(url)
@@ -40,7 +42,6 @@ async def process_response(url):
             if response_content[1] == 200:
                 data = base64.b64encode(open(response_content[0], "rb").read()).decode("utf-8")
                 src = f"data:image/png;base64,{data}"
-                print(type(src))
                 return src
             else:
                 src = None
@@ -53,13 +54,14 @@ async def process_response(url):
 async def image():  
     while True:            
         img = await process_response("https://cataas.com/cat")
+        print(type(img))
 
 
         document.querySelector("img").setAttribute("src", img)
 
 
         await asyncio.sleep(1)
-        print("meown", end=" ")
+        print("meow", end=" ")
 
 asyncio.ensure_future(image())
 
